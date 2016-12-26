@@ -14,18 +14,17 @@ class Myspider(scrapy.Spider):
     def start_requests(self):
         for i in range(1,11):
             url=self.bash_url+str(i)+'_1'+self.bashurl
-            yield Request(url,self.parse    )
-        yield Request('http://www.23wx.com/quanben/1',self.parse)
+            yield Request(url,self.parse)
     def parse(self, response):
         max_pagenum=BeautifulSoup(response.text,'lxml').find('a',class_='last').get_text()##作者不知道 这里有一个BUG
-        for i in range(1,11):
-            for num in range(1,int(max_pagenum)+1):
-                url=self.bash_url+str(i)+'_'+str(num)+self.bashurl
-                # print(url)
-                yield Request(url,callback=self.get_name)
-                '''yield request ,请求新的url,后面的是回调函数。你需要那个函数来处理这个数值就调用那个函数
-                返回值以参数形式传递给你所调用的函数
-                '''
+        bashurl=str(response.url)[:-7]
+        for num in range(1,int(max_pagenum)+1):
+            url=bashurl+'_'+str(num)+self.bashurl
+            # print(url)
+            yield Request(url,callback=self.get_name)
+            '''yield request ,请求新的url,后面的是回调函数。你需要那个函数来处理这个数值就调用那个函数
+            返回值以参数形式传递给你所调用的函数
+            '''
 
     def get_name(self,response):
         tds=BeautifulSoup(response.text,'lxml').find_all('tr',bgcolor="#FFFFFF")
@@ -45,7 +44,7 @@ class Myspider(scrapy.Spider):
         item['category']=str(category).replace(string.whitespace,'')
         item['author'] = str(author).replace(string.whitespace,'')
         item['name_id'] = name_id
-        print(item)
+        # print(item)
         yield item
         yield Request(url=bash_url,callback=self.get_chapter,meta={'name_id':name_id})
 

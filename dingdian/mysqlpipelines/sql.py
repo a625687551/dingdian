@@ -1,4 +1,4 @@
-import mysql.connector
+import pymysql#
 from dingdian import settings
 
 MYSQL_HOSTS=settings.MYSQL_HOSTS
@@ -7,7 +7,24 @@ MYSQL_PASSWORD=settings.MYSQL_PASSWORD
 MYSQL_PORT=settings.MYSQL_PORT
 MYSQL_DB=settings.MYSQL_DB
 
-cnx=mysql.connector.connect(user=MYSQL_USER,password=MYSQL_PASSWORD,host=MYSQL_HOSTS,database=MYSQL_DB)
+cnx=pymysql.connect(user=MYSQL_USER,
+                    password=MYSQL_PASSWORD,
+                    host=MYSQL_HOSTS,
+                    db=MYSQL_DB,
+                    charset='utf8mb4'
+                    )
+##sql创建新表的语句
+# Drop table if exits 'dd_name';
+# Drop table if EXISTS `dd_name`;
+# create table `dd_name` (
+#     `id` int(11) not null auto_increment,
+#     `xs_name` varchar(255) default null,
+#     `xs_author` varchar(255) default null,
+#     `category` varchar(255) default null,
+#     `name_id` varchar(255) default null,
+#     primary key (`id`)
+# ) engine = InnoDB Auto_increment = 38 default charset = utf8mb4;
+
 cur=cnx.cursor(buffered=True)
 
 class Sql:

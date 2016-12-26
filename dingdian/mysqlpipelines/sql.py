@@ -25,7 +25,7 @@ cnx=pymysql.connect(user=MYSQL_USER,
 #     primary key (`id`)
 # ) engine = InnoDB Auto_increment = 38 default charset = utf8mb4;
 
-cur=cnx.cursor(buffered=True)
+cur=cnx.cursor()
 
 class Sql:
 

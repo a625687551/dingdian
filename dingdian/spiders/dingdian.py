@@ -60,7 +60,7 @@ class Myspider(scrapy.Spider):
                 print(u'章节已经存在了')
                 return False
             else:
-                yield Request(chapterurl,callback=self.get_chaptercontent,meta={'num':num,
+                yield Request(chapterurl,headers=headers,callback=self.get_chaptercontent,meta={'num':num,
                                                                                 'name_id':response.meta['name_id'],
                                                                                 'chaptername':chaptername,
                                                                                 'chapterurl':chapterurl

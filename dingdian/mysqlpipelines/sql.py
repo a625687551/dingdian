@@ -14,6 +14,7 @@ cnx=pymysql.connect(user=MYSQL_USER,
                     charset='utf8mb4'
                     )
 ##sql创建新表的语句
+##第一个表
 # Drop table if exits 'dd_name';
 # Drop table if EXISTS `dd_name`;
 # create table `dd_name` (
@@ -24,6 +25,19 @@ cnx=pymysql.connect(user=MYSQL_USER,
 #     `name_id` varchar(255) default null,
 #     primary key (`id`)
 # ) engine = InnoDB Auto_increment = 38 default charset = utf8mb4;
+
+##第二个表
+# DROP TABLE IF EXISTS `dd_chaptername`;
+# CREATE TABLE `dd_chaptername` (
+#   `id` int(11) NOT NULL AUTO_INCREMENT,
+#   `xs_chaptername` varchar(255) DEFAULT NULL,
+#   `xs_content` text,
+#   `id_name` varchar(255) DEFAULT NULL,
+#   `num_id` varchar(255) DEFAULT NULL,
+#   `url` varchar(255) DEFAULT NULL,
+#   PRIMARY KEY (`id`)
+# ) ENGINE=InnoDB AUTO_INCREMENT=2726 DEFAULT CHARSET=gb18030;
+# SET FOREIGN_KEY_CHECKS=1;
 
 cur=cnx.cursor()
 
@@ -74,7 +88,7 @@ class Sql:
         return cur.fetchall()[0]
 
     @classmethod
-    def sclect_chapter(cls, url):
+    def select_chapter(cls, url):
         sql = "SELECT EXISTS(SELECT 1 FROM dd_chaptername WHERE url=%(url)s)"
         value = {
             'url': url

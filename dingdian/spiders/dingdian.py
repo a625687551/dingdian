@@ -68,7 +68,7 @@ class Myspider(scrapy.Spider):
     def get_chaptercontent(self,response):
         item=DcontentItem()
         item['num']=response.meta['num']
-        item['name_id']=response.meta['name_id']
+        item['id_name']=response.meta['name_id']
         item['chaptername']=response.meta['chaptername']
         item['chapterurl'] = response.meta['chapterurl']
         content=BeautifulSoup(response.text,'lxml').find('dd',id="contents").get_text()

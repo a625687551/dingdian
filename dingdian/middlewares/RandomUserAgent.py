@@ -10,5 +10,6 @@ class RandomUserAgent(object):
     @classmethod
     def from_crawler(cls,crawler):
         return cls(crawler.setting.getlist('USER_AGENTS'))
+
     def process_request(self,request,spider):
         request.headers.setdault('User-Agent',random.choice(self,agents))

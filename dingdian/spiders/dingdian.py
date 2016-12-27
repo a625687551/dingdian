@@ -10,6 +10,11 @@ class Myspider(scrapy.Spider):
     allowed_domains=['23wx.com']
     bash_url='http://www.23wx.com/class/'
     bashurl='.html'
+    headers={
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'zh-CN,zh;q=0.8',
+        'Referer': 'http://www.23wx.com/'
+    }
 
     def start_requests(self):
         for i in range(1,11):
@@ -60,7 +65,7 @@ class Myspider(scrapy.Spider):
                 print(u'章节已经存在了')
                 return False
             else:
-                yield Request(chapterurl,headers=headers,callback=self.get_chaptercontent,meta={'num':num,
+                yield Request(chapterurl,callback=self.get_chaptercontent,meta={'num':num,
                                                                                 'name_id':response.meta['name_id'],
                                                                                 'chaptername':chaptername,
                                                                                 'chapterurl':chapterurl

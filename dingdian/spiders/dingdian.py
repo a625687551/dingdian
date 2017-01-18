@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from scrapy.http import Request #单独的一个request模块，需要跟进url时候需要
 from dingdian.items import DingdianItem,DcontentItem #导入字段对象
 from dingdian.mysqlpipelines.sql import Sql
+
 class Myspider(scrapy.Spider):
     name = 'dingdian'
     allowed_domains=['23wx.com']
@@ -19,8 +20,13 @@ class Myspider(scrapy.Spider):
     def start_requests(self):
         for i in range(1,11):
             url=self.bash_url+str(i)+'_1'+self.bashurl
+            print(url)
             yield Request(url,self.parse)
     def parse(self, response):
+        proxy = response.meta.get('proxy', 'localhost')
+        UA = response.request.headers.get('User-Agent')
+        UA = UA.decode('utf-8') if UA else UA
+        print(proxy, u'代理开始采集', UA)
         max_pagenum=BeautifulSoup(response.text,'lxml').find('a',class_='last').get_text()##作者不知道 这里有一个BUG
         bashurl=str(response.url)[:-7]
         for num in range(1,int(max_pagenum)+1):
@@ -80,3 +86,21 @@ class Myspider(scrapy.Spider):
         item['chaptercontent']=str(content).replace(string.whitespace,'')
         # print(item)
         yield item
+
+##test code
+    # allowed_domains = ["ip.cn"]
+    #     # start_urls = (
+    #     #     'http://ip.cn/',
+    #     # )
+    #
+    #     def start_requests(self):
+    #         for i in range(100):
+    #             url = 'http://ip.cn/'
+    #             yield Request(url, dont_filter=True)
+    #
+    #     def parse(self, response):
+    #         # soup = BeautifulSoup(response.body.decode('utf-8', 'ignore'), 'lxml')
+    #         # print(soup.find('h1', class_="on").get_text())
+    #         # content = soup.find('div', class_="well")
+    #         content = response.xpath('//div[@class = "well"]//p//text()').extract()
+    #         print('\t'.join(content))

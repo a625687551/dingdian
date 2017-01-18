@@ -27,6 +27,7 @@ class Myspider(scrapy.Spider):
         UA = response.request.headers.get('User-Agent')
         UA = UA.decode('utf-8') if UA else UA
         print(proxy, u'代理开始采集', UA)
+
         max_pagenum=BeautifulSoup(response.text,'lxml').find('a',class_='last').get_text()##作者不知道 这里有一个BUG
         bashurl=str(response.url)[:-7]
         for num in range(1,int(max_pagenum)+1):
@@ -55,8 +56,8 @@ class Myspider(scrapy.Spider):
         item['category']=str(category).replace(string.whitespace,'')
         item['author'] = str(author).replace(string.whitespace,'')
         item['name_id'] = name_id
-        # print(item)
-        yield item
+        print(item)
+        # yield item
         yield Request(url=bash_url,callback=self.get_chapter,meta={'name_id':name_id})
 
     def get_chapter(self,response):
@@ -84,8 +85,8 @@ class Myspider(scrapy.Spider):
         item['chapterurl'] = response.meta['chapterurl']
         content=BeautifulSoup(response.text,'lxml').find('dd',id="contents").get_text()
         item['chaptercontent']=str(content).replace(string.whitespace,'')
-        # print(item)
-        yield item
+        print(item)
+        # yield item
 
 ##test code
     # allowed_domains = ["ip.cn"]

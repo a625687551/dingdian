@@ -8,13 +8,13 @@ from dingdian.mysqlpipelines.sql import Sql
 
 class Myspider(scrapy.Spider):
     name = 'dingdian'
-    allowed_domains=['23wx.com']
-    bash_url='http://www.23wx.com/class/'
+    allowed_domains=['23us.com']
+    bash_url='http://www.23us.com/class/'
     bashurl='.html'
     headers={
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         'Accept-Language': 'zh-CN,zh;q=0.8',
-        'Referer': 'http://www.23wx.com/'
+        'Referer': 'http://www.23us.com/'
     }
 
     def start_requests(self):

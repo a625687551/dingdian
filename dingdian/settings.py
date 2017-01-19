@@ -66,7 +66,6 @@ DOWNLOADER_MIDDLEWARES = {
     'dingdian.middlewares.RandomUserAgent.RandomUserAgent': 200,
     'dingdian.middlewares.RandomProxy.RandomProxy': 200,
     'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
-    # 'meizitu.middlewares.HttpProxyMiddleware.HttpProxyMiddleware': 543,
     'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware': 350,
     'scrapy.downloadermiddlewares.retry.RetryMiddleware': 351,
 }

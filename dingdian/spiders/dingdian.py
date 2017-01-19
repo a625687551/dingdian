@@ -32,7 +32,7 @@ class Myspider(scrapy.Spider):
         bashurl=str(response.url)[:-7]
         for num in range(1,int(max_pagenum)+1):
             url=bashurl+'_'+str(num)+self.bashurl
-            # print(url)
+            print(url)
             yield Request(url,callback=self.get_name)
             '''yield request ,请求新的url,后面的是回调函数。你需要那个函数来处理这个数值就调用那个函数
             返回值以参数形式传递给你所调用的函数
@@ -43,6 +43,7 @@ class Myspider(scrapy.Spider):
         for td in tds:
             novelname=td.find('td',class_="L").get_text()
             novelurl=td.find('a')['href']
+            # print(novelurl)
             yield Request(novelurl,callback=self.get_chapterurl,meta={'name':novelname,'url':novelurl})
 
     def get_chapterurl(self,response):
@@ -56,8 +57,8 @@ class Myspider(scrapy.Spider):
         item['category']=str(category).replace(string.whitespace,'')
         item['author'] = str(author).replace(string.whitespace,'')
         item['name_id'] = name_id
-        print(item)
-        # yield item
+        # print(item)
+        yield item
         yield Request(url=bash_url,callback=self.get_chapter,meta={'name_id':name_id})
 
     def get_chapter(self,response):
@@ -85,8 +86,8 @@ class Myspider(scrapy.Spider):
         item['chapterurl'] = response.meta['chapterurl']
         content=BeautifulSoup(response.text,'lxml').find('dd',id="contents").get_text()
         item['chaptercontent']=str(content).replace(string.whitespace,'')
-        print(item)
-        # yield item
+        # print(item)
+        yield item
 
 ##test code
     # allowed_domains = ["ip.cn"]

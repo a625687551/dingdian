@@ -23,6 +23,8 @@ class DingdianItem(scrapy.Item):
     category = scrapy.Field()
     # 小说编号:
     name_id = scrapy.Field()
+
+
 class DcontentItem(scrapy.Item):
     # 小说编号:
     id_name = scrapy.Field()

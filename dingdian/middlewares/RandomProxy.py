@@ -8,6 +8,8 @@ from dingdian import settings
 '''
 这个类主要产生随机的IP
 '''
+
+
 class RandomProxy(object):
     def __init__(self):
         '''
@@ -25,14 +27,15 @@ class RandomProxy(object):
         #     self.iplist.append('http://'+re.sub('\n','',i).strip())
         for i in ip_ports:
             self.iplist.append('http://' + str(i[0]) + ':' + str(i[1]))
-    def process_request(self,request,spider):
+
+    def process_request(self, request, spider):
         '''
         在请求上添加代理
         '''
 
         ip = random.choice(self.iplist)
         # result = self.db_helper.findOneResult({'proxyId':ip})
-        request.meta['proxy'] =ip
+        request.meta['proxy'] = ip
 
     def process_response(self, request, response, spider):
         '''

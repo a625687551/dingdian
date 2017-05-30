@@ -1,18 +1,18 @@
-import pymysql#
+import pymysql  #
 from dingdian import settings
 
-MYSQL_HOSTS=settings.MYSQL_HOSTS
-MYSQL_USER=settings.MYSQL_USER
-MYSQL_PASSWORD=settings.MYSQL_PASSWORD
-MYSQL_PORT=settings.MYSQL_PORT
-MYSQL_DB=settings.MYSQL_DB
+MYSQL_HOSTS = settings.MYSQL_HOSTS
+MYSQL_USER = settings.MYSQL_USER
+MYSQL_PASSWORD = settings.MYSQL_PASSWORD
+MYSQL_PORT = settings.MYSQL_PORT
+MYSQL_DB = settings.MYSQL_DB
 
-cnx=pymysql.connect(user=MYSQL_USER,
-                    password=MYSQL_PASSWORD,
-                    host=MYSQL_HOSTS,
-                    db=MYSQL_DB,
-                    charset='utf8mb4'
-                    )
+cnx = pymysql.connect(user=MYSQL_USER,
+                      password=MYSQL_PASSWORD,
+                      host=MYSQL_HOSTS,
+                      db=MYSQL_DB,
+                      charset='utf8mb4'
+                      )
 ##sql创建新表的语句
 ##第一个表
 # Drop table if exits 'dd_name';
@@ -39,20 +39,20 @@ cnx=pymysql.connect(user=MYSQL_USER,
 # ) ENGINE=InnoDB AUTO_INCREMENT=2726 DEFAULT CHARSET=gb18030;
 # SET FOREIGN_KEY_CHECKS=1;
 
-cur=cnx.cursor()
+cur = cnx.cursor()
+
 
 class Sql:
-
     @classmethod
-    def insert_dd_name(cls,xs_name,xs_author,category,name_id):
-        sql='INSERT INTO dd_name (`xs_name`, `xs_author`, `category`, `name_id`) VALUES (%(xs_name)s, %(xs_author)s, %(category)s, %(name_id)s)'
-        value={
-            'xs_name':xs_name,
-            'xs_author':xs_author,
-            'category':category,
-            'name_id':name_id,
+    def insert_dd_name(cls, xs_name, xs_author, category, name_id):
+        sql = 'INSERT INTO dd_name (`xs_name`, `xs_author`, `category`, `name_id`) VALUES (%(xs_name)s, %(xs_author)s, %(category)s, %(name_id)s)'
+        value = {
+            'xs_name': xs_name,
+            'xs_author': xs_author,
+            'category': category,
+            'name_id': name_id,
         }
-        cur.execute(sql,value)
+        cur.execute(sql, value)
         cnx.commit()
 
     @classmethod
@@ -78,13 +78,14 @@ class Sql:
         cur.execute(sql, value)
         for name_id in cur:
             return name_id[0]
+
     @classmethod
-    def select_name(cls,name_id):
-        sql='SELECT EXISTS(SELECT 1 FROM dd_name WHERE name_id=%(name_id)s)'
-        value={
-            'name_id':name_id
+    def select_name(cls, name_id):
+        sql = 'SELECT EXISTS(SELECT 1 FROM dd_name WHERE name_id=%(name_id)s)'
+        value = {
+            'name_id': name_id
         }
-        cur.execute(sql,value)
+        cur.execute(sql, value)
         return cur.fetchall()[0]
 
     @classmethod
